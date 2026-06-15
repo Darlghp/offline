@@ -1,0 +1,6 @@
+{
+  "name": "OfflineGram",
+  "description": "Uma plataforma social offline completa com sistema multiplas contas, painel de admin, posts, likes, e comentários.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
