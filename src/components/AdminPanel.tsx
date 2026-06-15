@@ -21,15 +21,25 @@ export const AdminPanel = () => {
     setFormData({ username: '', fullName: '', bio: '', avatar: '' });
   };
 
-  const handeSave = async () => {
-    if (isCreating) {
-      await createUser(formData);
-    } else if (editingUserId) {
-      await updateUser(editingUserId, formData);
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      let finalData = { ...formData };
+      if (!finalData.avatar) {
+        finalData.avatar = `https://api.dicebear.com/7.x/avataaars/svg?seed=${finalData.username}`;
+      }
+
+      if (isCreating) {
+        await createUser(finalData);
+      } else if (editingUserId) {
+        await updateUser(editingUserId, finalData);
+      }
+      setEditingUserId(null);
+      setIsCreating(false);
+      await refreshUsers();
+    } catch (e: any) {
+      alert("Erro ao salvar: " + e.message);
     }
-    setEditingUserId(null);
-    setIsCreating(false);
-    await refreshUsers();
   };
 
   const handleDelete = async (id: number) => {
@@ -117,7 +127,7 @@ export const AdminPanel = () => {
                <h3 className="text-lg font-semibold mb-6 text-white border-b border-[#262626] pb-2">
                  {isCreating ? 'Criar Nova Conta' : 'Editar Conta'}
                </h3>
-               <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); handeSave(); }}>
+               <form className="space-y-4" onSubmit={handleSave}>
                  <div>
                    <label className="block text-sm font-medium text-gray-400 mb-1">Nome de usuário</label>
                    <input 
