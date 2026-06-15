@@ -23,6 +23,12 @@ export const AdminPanel = () => {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.username.trim() || !formData.fullName.trim()) {
+      alert('Por favor, preencha o nome de usuário e o nome completo.');
+      return;
+    }
+
     try {
       let finalData = { ...formData };
       if (!finalData.avatar) {
@@ -131,7 +137,6 @@ export const AdminPanel = () => {
                  <div>
                    <label className="block text-sm font-medium text-gray-400 mb-1">Nome de usuário</label>
                    <input 
-                     required
                      className="w-full bg-[#1a1a1a] border border-[#262626] rounded-lg p-2.5 text-sm outline-none focus:ring-1 focus:ring-white text-white"
                      value={formData.username}
                      onChange={e => setFormData({...formData, username: e.target.value})}
@@ -140,7 +145,6 @@ export const AdminPanel = () => {
                  <div>
                    <label className="block text-sm font-medium text-gray-400 mb-1">Nome Completo</label>
                    <input 
-                     required
                      className="w-full bg-[#1a1a1a] border border-[#262626] rounded-lg p-2.5 text-sm outline-none focus:ring-1 focus:ring-white text-white"
                      value={formData.fullName}
                      onChange={e => setFormData({...formData, fullName: e.target.value})}
